@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tamaño de texto para títulos -->
+    <dimen name="text_size_title">35sp</dimen>
+
+    <!-- Tamaño de texto para etiquetas -->
+    <dimen name="text_size_label">16sp</dimen>
+
+    <!-- Margen general -->
+    <dimen name="margin_standard">20dp</dimen>
+
+    <!-- Altura y ancho estándar para botones -->
+    <dimen name="button_width">327dp</dimen>
+    <dimen name="button_height">49dp</dimen>
+
+    <!-- Altura estándar para campos de texto -->
+    <dimen name="edittext_height">38dp</dimen>
+</resources>
