@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import CustomUser, UserSession
+from .models import CustomUser, UserSession, Favorite
 import bcrypt, json, secrets
 
 SESSION_TOKEN_HEADER = 'Session-Token'
@@ -62,4 +62,61 @@ def login(request):
                             status=201)
     else:
         return JsonResponse({'error': 'Password is invalid'}, status=401)
+
+@csrf_exempt
+def add_favorite(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Unsupported HTTP method'}, status=405)
+
+    body = json.loads(request.body)
+    session_token = request.headers.get(SESSION_TOKEN_HEADER)
+    if not session_token:
+        return JsonResponse({'error': 'Missing session token'}, status=401)
+
+    try:
+        session = UserSession.objects.get(token=session_token)
+        user = session.user
+    except UserSession.DoesNotExist:
+        return JsonResponse({'error': 'Invalid session token'}, status=401)
+
+    title = body.get('title', None)
+    url = body.get('url', None)
+    if not title or not url:
+        return JsonResponse({'error': 'Missing title or URL in request body'}, status=400)
+
+    description = body.get('description', '')
+    image = body.get('image', '')
+
+    favorite = Favorite(user=user, title=title, url=url, description=description, image=image)
+    favorite.save()
+
+    return JsonResponse({'message': 'Favorite added successfully'}, status=201)
+
+@csrf_exempt
+def get_favorites(request):
+    if request.method != 'GET':
+        return JsonResponse({'error': 'Unsupported HTTP method'}, status=405)
+
+    session_token = request.headers.get(SESSION_TOKEN_HEADER)
+    if not session_token:
+        return JsonResponse({'error': 'Missing session token'}, status=401)
+
+    try:
+        session = UserSession.objects.get(token=session_token)
+        user = session.user
+    except UserSession.DoesNotExist:
+        return JsonResponse({'error': 'Invalid session token'}, status=401)
+
+    favorites = Favorite.objects.filter(user=user)
+    favorites_list = [
+        {
+            'title': fav.title,
+            'url': fav.url,
+            'description': fav.description,
+            'image': fav.image,
+            'added_at': fav.added_at.isoformat()
+        } for fav in favorites
+    ]
+
+    return JsonResponse({'favorites': favorites_list}, status=200)
 
