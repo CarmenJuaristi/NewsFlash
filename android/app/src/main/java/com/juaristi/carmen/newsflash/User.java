@@ -3,11 +3,17 @@ public class User {
     private String username;
     private String password;
     private String email;
+    private String token;
 
     public void setUsername(String username) {
         this.username = username;
     }
-
+    public String getToken() {
+        return token;
+    }
+    public void setToken(String token){
+        this.token = token;
+    }
     public void setPassword(String password) {
         this.password = password;
     }

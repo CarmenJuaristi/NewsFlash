@@ -5,14 +5,14 @@ import java.util.List;
 public class ApiResponse {
 
     @SerializedName("feed")
-    private List<Noticias> feed;
+    private List<News> feed;
 
     // Getter y Setter
-    public List<Noticias> getFeed() {
+    public List<News> getFeed() {
         return feed;
     }
 
-    public void setFeed(List<Noticias> feed) {
+    public void setFeed(List<News> feed) {
         this.feed = feed;
     }
 }

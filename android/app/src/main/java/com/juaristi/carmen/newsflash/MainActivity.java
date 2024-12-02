@@ -31,12 +31,12 @@ public class MainActivity extends AppCompatActivity   {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if(item.getItemId()==R.id.categoria){
-                    Fragment Categorias = new Fragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,Categorias).commit();
+                    Fragment Categories = new Fragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,Categories).commit();
                 }
                 if(item.getItemId()==R.id.inicio){
-                    Fragment Inicio = new Fragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,Inicio).commit();
+                    Fragment HomeActivity = new Fragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,HomeActivity).commit();
                 }
                 if(item.getItemId()==R.id.tendencia){
                     Fragment Tendencia = new Fragment();
@@ -49,5 +49,12 @@ public class MainActivity extends AppCompatActivity   {
                 return true;
             }
         });
+    }
+    private Fragment createCategoryFragment(String category) {
+        Categories categoriasFragment = new Categories();
+        Bundle args = new Bundle();
+        args.putString("category", category);
+        categoriasFragment.setArguments(args);
+        return categoriasFragment;
     }
 }
