@@ -1,4 +1,4 @@
 package com.juaristi.carmen.newsflash;
 
-public class Perfil {
+public class Profile {
 }

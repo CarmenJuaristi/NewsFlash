@@ -11,5 +11,12 @@ public interface ApiNews {
             @Query("apikey") String apiKey,       // La clave de API
             @Query("tickers") String keyword      // Filtro por palabra clave (opcional)
     );
+
+    @GET("endpoint_for_trending_news")
+    Call<ApiResponse> getTrendingNews(
+            @Query("function") String function,
+            @Query("apikey") String apiKey
+    );
+
 }
 
