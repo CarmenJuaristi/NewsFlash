@@ -18,12 +18,13 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 public class TrendActivity extends Fragment {
 
     private RecyclerView recyclerView;
     private NewsAdapter adapter;
-    private ApiNews apiNews;
+    private ApiService apiService;
+
+    private static final String API_KEY = "YOUR_API_KEY";  // Asegúrate de reemplazarla con tu clave de API de Alpha Vantage
 
     @Nullable
     @Override
@@ -34,47 +35,60 @@ public class TrendActivity extends Fragment {
         recyclerView = view.findViewById(R.id.trendRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        apiNews = RetrofitClient.getClient().create(ApiNews.class);
+        // Configuración del cliente de Retrofit para noticias
+        apiService = RetrofitClient.getNewsClient().create(ApiService.class);
 
+        // Cargar noticias en tendencia
         fetchTrendingNews();
 
         return view;
     }
 
     private void fetchTrendingNews() {
-        Call<ApiResponse> call = apiNews.getTrendingNews("NEWS_SENTIMENT", "YOUR_API_KEY");
+        String function = "NEWS_SENTIMENT"; // Ajustar según tu API
+        String apiKey = API_KEY; // Usar la clave de la API aquí
 
+        // Llamada a la API para obtener noticias en tendencia
+        Call<ApiResponse> call = apiService.getTrendingNews(function, apiKey);
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<News> newsList = response.body().getFeed();
+                    // Obtener las noticias desde la respuesta de la API
+                    List<Article> articleList = response.body().getFeed();
 
-                    if (newsList != null && !newsList.isEmpty()) {
-                        List<News> top10News = newsList.size() > 10 ? newsList.subList(0, 10) : newsList;
+                    if (articleList != null && !articleList.isEmpty()) {
+                        // Limitar a las 10 mejores noticias
+                        List<Article> top10News = articleList.size() > 10 ? articleList.subList(0, 10) : articleList;
                         setupRecyclerView(top10News);
                     } else {
                         Toast.makeText(getContext(), "No trending news found.", Toast.LENGTH_SHORT).show();
                     }
                 } else {
+                    // Manejar códigos de error
                     Toast.makeText(getContext(), "Error fetching trending news: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ApiResponse> call, Throwable t) {
+                // Manejar errores de conexión o tiempo de espera
                 Toast.makeText(getContext(), "Error connecting to API: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void setupRecyclerView(List<News> newsList) {
-        adapter = new NewsAdapter(newsList, news -> {
+    private void setupRecyclerView(List<Article> articleList) {
+        adapter = new NewsAdapter(articleList, news -> {
+            // Navegar a NewsDetailActivity al hacer clic en un ítem
             Intent intent = new Intent(getContext(), NewsDetailActivity.class);
             intent.putExtra("news_title", news.getTitle());
             intent.putExtra("news_summary", news.getSummary());
+            intent.putExtra("news_category", news.getCategory());
+            intent.putExtra("news_ticker", news.getTicker());
             startActivity(intent);
         });
         recyclerView.setAdapter(adapter);
     }
 }
+

@@ -3,6 +3,7 @@ package com.juaristi.carmen.newsflash;
 public class UserResponse {
     private int id;
     private String username;
+    private String token;
     private String email;
 
     // Constructor con parámetros para inicializar los campos
@@ -15,6 +16,9 @@ public class UserResponse {
     // Métodos getter y setter
     public int getId() {
         return id;
+    }
+    public String getToken() {
+        return token;
     }
 
     public void setId(int id) {

@@ -1,74 +1,95 @@
 package com.juaristi.carmen.newsflash;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.AsyncListDiffer;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
+public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleViewHolder> {
 
-    public interface OnItemClickListener {
-        void onItemClick(News news);
+    private AsyncListDiffer<Article> differ;
+    private OnItemClickListener onItemClickListener;
+
+    public NewsAdapter() {
+        DiffUtil.ItemCallback<Article> differCallback = new DiffUtil.ItemCallback<Article>() {
+            @Override
+            public boolean areItemsTheSame(@NonNull Article oldItem, @NonNull Article newItem) {
+                return oldItem.getUrl().equals(newItem.getUrl());
+            }
+
+            @Override
+            public boolean areContentsTheSame(@NonNull Article oldItem, @NonNull Article newItem) {
+                return oldItem.equals(newItem);  // Ahora funciona porque hemos implementado equals() en Article
+            }
+        };
+
+        differ = new AsyncListDiffer<>(this, differCallback);
     }
 
-    private List<News> newsList;
-    private OnItemClickListener listener;
-
-    public NewsAdapter(List<News> newsList, OnItemClickListener listener) {
-        this.newsList = newsList;
-        this.listener = listener;
-    }
-
+    @NonNull
     @Override
-    public NewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ArticleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_news, parent, false);
-        return new NewsViewHolder(view);
+        return new ArticleViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(NewsViewHolder holder, int position) {
-        News news = newsList.get(position);
-        holder.titleTextView.setText(news.getTitle());
+    public void onBindViewHolder(@NonNull ArticleViewHolder holder, int position) {
+        Article article = differ.getCurrentList().get(position);
 
-        // Configura el click para abrir detalles de la noticia
+        Glide.with(holder.itemView).load(article.getUrlToImage()).into(holder.articleImage);
+        holder.articleSource.setText(article.getSource());  // Cambiado para que sea un String
+        holder.articleTitle.setText(article.getTitle());
+        holder.articleDescription.setText(article.getDescription());
+        holder.articleDateTime.setText(article.getPublishedAt());
+
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(v.getContext(), NewsDetailActivity.class);
-            intent.putExtra("news_title", news.getTitle());
-            intent.putExtra("news_summary", news.getSummary());
-            intent.putExtra("news_category", news.getCategory());
-            intent.putExtra("news_ticker", news.getTicker());
-            v.getContext().startActivity(intent);
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(article);
+            }
         });
     }
 
-
     @Override
     public int getItemCount() {
-        return newsList != null ? newsList.size() : 0;
+        return differ.getCurrentList().size();
     }
 
-    public static class NewsViewHolder extends RecyclerView.ViewHolder {
-        TextView titleTextView;
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
+    }
 
-        public NewsViewHolder(View itemView) {
+    // Interface para el listener de clics
+    public interface OnItemClickListener {
+        void onItemClick(Article article);
+    }
+
+    // ViewHolder para el artículo
+    public static class ArticleViewHolder extends RecyclerView.ViewHolder {
+
+        public ImageView articleImage;
+        public TextView articleSource;
+        public TextView articleTitle;
+        public TextView articleDescription;
+        public TextView articleDateTime;
+
+        public ArticleViewHolder(View itemView) {
             super(itemView);
-            titleTextView = itemView.findViewById(R.id.news_title);
-        }
-
-        public void bind(final News news, final OnItemClickListener listener) {
-            titleTextView.setText(news.getTitle());
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onItemClick(news);
-                }
-            });
+            articleImage = itemView.findViewById(R.id.articleImage);
+            articleSource = itemView.findViewById(R.id.articleSource);
+            articleTitle = itemView.findViewById(R.id.articleTitle);
+            articleDescription = itemView.findViewById(R.id.articleDescription);
+            articleDateTime = itemView.findViewById(R.id.articleDateTime);
         }
     }
 }
-

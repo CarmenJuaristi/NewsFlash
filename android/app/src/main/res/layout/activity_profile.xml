@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Imagen de usuario (opcional) -->
+    <ImageView
+        android:id="@+id/profilePicture"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/perfil"
+        android:contentDescription="@string/profile_picture"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Nombre del usuario -->
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Username"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Botón: Editar perfil -->
+    <Button
+        android:id="@+id/editProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_profile"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Botón: Ver favoritos -->
+    <Button
+        android:id="@+id/viewFavorites"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/view_favorites"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Botón: Cerrar sesión -->
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/logout"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/red" />
+
+    <!-- Botón: Eliminar cuenta -->
+    <Button
+        android:id="@+id/deleteAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/delete_account"
+        android:backgroundTint="@color/red" />
+
+    <!-- RecyclerView para mostrar los favoritos -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewFavorites"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" />
+
+</LinearLayout>

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">NewsFlash</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="view_favorites">View Favorites</string>
+    <string name="logout">Log Out</string>
+    <string name="delete_account">Delete Account</string>
 </resources>
