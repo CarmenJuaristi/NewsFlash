@@ -6,12 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!-- Logo -->
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="177dp"
+        android:layout_height="171dp"
+        android:src="@drawable/logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Bienvenida -->
     <TextView
         android:id="@+id/Bienvenida"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
         android:text="Bienvenido a NewsFlash!"
         android:textSize="@dimen/text_size_title"
         android:textStyle="bold|italic"
@@ -19,106 +28,88 @@
         android:autoSizeMinTextSize="18sp"
         android:autoSizeMaxTextSize="35sp"
         android:autoSizeStepGranularity="2sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logo" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="177dp"
-        android:layout_height="171dp"
-        android:src="@drawable/logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+    <!-- Email Label -->
     <TextView
         android:id="@+id/email_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
         android:text="Email"
         android:textSize="@dimen/text_size_label"
-        app:layout_constraintBottom_toTopOf="@id/correo"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Bienvenida" />
+        app:layout_constraintTop_toBottomOf="@id/Bienvenida"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Email Input -->
     <EditText
         android:id="@+id/correo"
-        android:layout_width="319dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:hint="example@gmail.com"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/email_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logo"
-        app:layout_constraintVertical_bias="0.254" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.1" />
 
+    <!-- Password Label -->
     <TextView
         android:id="@+id/password_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:text="Password"
         android:textSize="@dimen/text_size_label"
-        app:layout_constraintBottom_toTopOf="@+id/password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.137"
+        app:layout_constraintTop_toBottomOf="@id/correo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/correo" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Password Input -->
     <EditText
         android:id="@+id/password"
-        android:layout_width="320dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
-        android:inputType="textPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:hint="**********"
-        app:layout_constraintBottom_toTopOf="@+id/username_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.527"
+        android:inputType="textPassword"
+        app:layout_constraintTop_toBottomOf="@id/password_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/password_text" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.1" />
 
+    <!-- Username Label -->
     <TextView
         android:id="@+id/username_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:text="Username"
         android:textSize="@dimen/text_size_label"
-        app:layout_constraintBottom_toTopOf="@+id/username"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.147"
+        app:layout_constraintTop_toBottomOf="@id/password"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/password" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Username Input -->
     <EditText
         android:id="@+id/username"
-        android:layout_width="326dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:hint="example"
-        app:layout_constraintBottom_toTopOf="@id/crear_cuenta"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.564"
+        app:layout_constraintTop_toBottomOf="@id/username_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username_text" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.1" />
 
+    <!-- Crear cuenta button -->
     <Button
         android:id="@+id/crear_cuenta"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginBottom="76dp"
-        android:text="¿No tienes cuenta?"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Crear cuenta"
+        app:layout_constraintTop_toBottomOf="@id/username"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username"
-        app:layout_constraintVertical_bias="0.542" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

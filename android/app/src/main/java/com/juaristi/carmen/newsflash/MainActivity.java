@@ -20,9 +20,9 @@ public class MainActivity extends AppCompatActivity   {
     protected void onCreate(@Nullable  Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Fragment myHome = new Fragment();
-        Fragment myCategories = new Fragment();
-        Fragment myTrend = new Fragment();
+        Fragment myArticles = new Fragment();
+        Fragment myFavourites = new Fragment();
+        Fragment mySearch = new Fragment();
         Fragment myProfile = new Fragment();
 
         BottomNavigationView bar = findViewById(R.id.bottomNavigation);
@@ -31,20 +31,20 @@ public class MainActivity extends AppCompatActivity   {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if(item.getItemId()==R.id.category){
-                    Fragment Categories = new Fragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,Categories).commit();
+                    Fragment FavouritesFragment = new Fragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,FavouritesFragment).commit();
                 }
                 if(item.getItemId()==R.id.home){
-                    Fragment HomeActivity = new Fragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,HomeActivity).commit();
+                    Fragment ArticleFragment = new Fragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,ArticleFragment).commit();
                 }
                 if(item.getItemId()==R.id.trend){
-                    Fragment TrendActivity = new Fragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,TrendActivity).commit();
+                    Fragment SearchFragment = new Fragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,SearchFragment).commit();
                 }
                 if(item.getItemId()==R.id.profile){
-                    Fragment Profile = new Fragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,Profile).commit();
+                    Fragment ProfileActivity = new Fragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,ProfileActivity).commit();
                 }
                 return true;
             }
